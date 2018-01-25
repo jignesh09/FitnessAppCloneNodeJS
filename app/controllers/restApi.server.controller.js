@@ -3136,53 +3136,6 @@ exports.postSocial = function(req, res){
     }
 };
 
-/*exports.postCompete = function(req, res){
-    var resObj = new Object(),
-    baseUrl = req.protocol + '://' + req.get('host'),
-    currentDate = _this.postCurrentDate(req,res);
-    if(req.body.member_id){
-        Challenge.find({ member_id: { $elemMatch: { $eq: req.body.member_id } },status: {'$eq':'Active'} },{'_id':1,'photo':1,'company_id':1,'title':1,'description':1,'startdate':1,'enddate':1,'days':1,'target':1,'video_url':1,'category':1}, function(err, challengesInfo) {
-            var ongoingArr = [], almostOverArr = [], overArr = [];
-            async.forEachSeries(challengesInfo, function(singleChallenge, callback_singleChallenge) {
-                singleChallenge = JSON.parse(JSON.stringify(singleChallenge));
-                var startDate = new Date(singleChallenge.startdate),
-                endDate = new Date(singleChallenge.enddate);
-                singleChallenge.dayRange = (monthNamesShort[startDate.getMonth()]+' '+startDate.getDate())+' - '+(monthNamesShort[endDate.getMonth()]+' '+endDate.getDate());
-                singleChallenge.photo = (singleChallenge.photo!='') ? baseUrl+'/challenges/'+singleChallenge.photo : baseUrl+'/challenges/no-image.png';
-                    
-                var competitors = [{'name':'Stephen Anderson','achieve':'9.5 km'},{'name':'Steven Smith','achieve':'9.2 km'},{'name':'Brett Lee','achieve':'9.0 km'}];
-                singleChallenge.competitors = competitors;
-
-                if(moment(currentDate).isBefore(singleChallenge.startdate)){
-                    ongoingArr.push(singleChallenge);
-                }
-                else if(moment(currentDate).isAfter(singleChallenge.enddate)){
-                    overArr.push(singleChallenge);
-                }
-                else {
-                    almostOverArr.push(singleChallenge);
-                }
-                callback_singleChallenge();
-            }, function (err) {
-                var competeObj = {
-                    'ongoing' : ongoingArr,
-                    'almost_over' : almostOverArr,
-                    'over' : overArr
-                };
-                resObj.data = competeObj;
-                resObj.status = 1;
-                resObj.message = '';
-                res.json(resObj);
-            });
-        });
-    }
-    else {
-        resObj.status = 0;
-        resObj.message = 'Not passed required parameters';
-        res.json(resObj);
-    }
-};*/
-
 exports.postCompete = function(req, res){
     function aktivoChallenge(params,next){
         var dateRange = _this.postRangeStartEndDates(req,res,params.startdate,params.enddate),
